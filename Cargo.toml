@@ -1,0 +1,4 @@
+[package]
+name = "wcstr"
+version = "0.1.0"
+authors = ["rusty <rusty.new.dev@gmail.com>"]
