@@ -4,8 +4,10 @@ use ::std::ffi::OsStr;
 use ::std::os::windows::ffi::OsStrExt;
 
 use ::error;
-use ::error::{NulError, NoNulError};
-use ::wcstr::WCStr;
+use ::{NulError, NoNulError};
+use ::WCStr;
+use ::split;
+use ::Split;
 
 /// A type representing an owned Win32 style "wide" string.
 #[derive(PartialEq, PartialOrd, Eq, Ord, Hash, Clone)]
@@ -300,6 +302,25 @@ impl WCString {
             self.inner.push(0);
             Ok(())
         }
+    }
+
+    /// Split the string into multiple ```&mut WCStr``` using a delimiter.
+    ///
+    /// * This returns an iterator that creates a ```&mut WCStr``` for each part of the string
+    /// separated by the delimiter.
+    /// * This will consume the string.
+    ///
+    /// # ```split()``` example
+    ///     use wcstr::WCString;
+    ///     let s = WCString::from_str("a;b;c;d;e").unwrap();
+    ///     let mut count = 0;
+    ///     for w in s.split(b';' as u16).iter() {
+    ///         count += 1;
+    ///         assert!(w.len() == 1);
+    ///     }
+    ///     assert!(count == 5);
+    pub fn split(self, delimiter: u16) -> Split {
+        split::new(self.inner, delimiter)
     }
 }
 

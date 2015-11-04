@@ -13,8 +13,10 @@
 
 mod wcstr;
 mod wcstring;
+mod split;
 mod error;
 
 pub use error::{NulError, NoNulError};
 pub use wcstr::WCStr;
 pub use wcstring::WCString;
+pub use split::Split;
