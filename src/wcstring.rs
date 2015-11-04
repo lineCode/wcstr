@@ -322,6 +322,26 @@ impl WCString {
     pub fn split(self, delimiter: u16) -> Split {
         split::new(self.inner, delimiter)
     }
+
+    /// Replace a ```u16``` value with another ```u16``` value in the string.
+    ///
+    /// * This will assert if either ```needle``` or ```replacement``` is ```nul```
+    ///
+    /// # ```replace()``` example
+    ///     use wcstr::WCString;
+    ///     let mut s = WCString::from_str("x y z").unwrap();
+    ///     s.replace(b' ' as u16, b':' as u16);
+    ///     let t = s.to_string().unwrap();
+    ///     assert!(t == "x:y:z");
+    pub fn replace(&mut self, needle: u16, replacement: u16) {
+        assert!(needle != 0);
+        assert!(replacement != 0);
+        for w in self.inner.iter_mut() {
+            if *w == needle {
+                *w = replacement;
+            }
+        }
+    }
 }
 
 impl std::ops::Deref for WCString {
