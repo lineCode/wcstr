@@ -95,7 +95,18 @@ impl WCStr {
         OsString::from_wide(self.to_slice())
     }
 
-    /// starts with a string
+    /// starts with a string.
+    ///
+    /// # ```starts_with()``` example
+    ///
+    ///     use wcstr::{WCStr, WCString};
+    ///     let s = WCString::from_str("abcefg").unwrap();
+    ///     let t = WCString::from_str("abc").unwrap();
+    ///     let u = WCString::from_str("efg").unwrap();
+    ///     let v = WCString::from_str("abcefgh").unwrap();
+    ///     assert!(s.starts_with(t));
+    ///     assert!(!s.starts_with(u));
+    ///     assert!(!s.starts_with(v));
     pub fn starts_with<T>(&self, s: T) -> bool
         where T: AsRef<WCStr> {
         let s = s.as_ref();
@@ -107,7 +118,15 @@ impl WCStr {
         self.to_slice().iter().zip(s.to_slice().iter()).all(|(&a, &b)| a == b)
     }
 
-    /// starts with a string
+    /// starts with a string.
+    ///
+    /// # ```starts_with()``` example
+    ///
+    ///     use wcstr::{WCStr, WCString};
+    ///     let s = WCString::from_str("abcefg").unwrap();
+    ///     assert!(s.starts_with_str("abc"));
+    ///     assert!(!s.starts_with_str("efg"));
+    ///     assert!(!s.starts_with_str("abcefgh"));
     pub fn starts_with_str<T>(&self, s: T) -> bool
         where T: AsRef<OsStr> {
         let s = s.as_ref();
