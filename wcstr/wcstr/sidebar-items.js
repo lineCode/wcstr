@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["WCStr","Representation of a borrowed Win32 style \"wide\" string."]]});

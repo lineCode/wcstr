@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Split","Created with method ```.split(delim)```"]]});
