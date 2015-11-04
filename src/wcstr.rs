@@ -101,7 +101,7 @@ impl std::fmt::Debug for WCStr {
         try!(write!(f, "\""));
         for &w in self.to_slice().iter() {
             if w < 0xD800 || w >= 0xE000 {
-                for c in unsafe { std::char::from_u32_unchecked(w as u32) }.escape_default() {
+                for c in std::char::from_u32(w as u32).unwrap().escape_default() {
                     use std::fmt::Write;
                     try!(f.write_char(c));
                 }
