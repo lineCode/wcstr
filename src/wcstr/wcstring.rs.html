@@ -399,6 +399,26 @@
 <span id="357">357</span>
 <span id="358">358</span>
 <span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> ::<span class='ident'>std</span>;
@@ -723,6 +743,26 @@
     <span class='doccomment'>///     assert!(count == 5);</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>split</span>(<span class='self'>self</span>, <span class='ident'>delimiter</span>: <span class='ident'>u16</span>) <span class='op'>-&gt;</span> <span class='ident'>Split</span> {
         <span class='ident'>split</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>inner</span>, <span class='ident'>delimiter</span>)
+    }
+
+    <span class='doccomment'>/// Replace a ```u16``` value with another ```u16``` value in the string.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// * This will assert if either ```needle``` or ```replacement``` is ```nul```</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # ```replace()``` example</span>
+    <span class='doccomment'>///     use wcstr::WCString;</span>
+    <span class='doccomment'>///     let mut s = WCString::from_str(&quot;x y z&quot;).unwrap();</span>
+    <span class='doccomment'>///     s.replace(b&#39; &#39; as u16, b&#39;:&#39; as u16);</span>
+    <span class='doccomment'>///     let t = s.to_string().unwrap();</span>
+    <span class='doccomment'>///     assert!(t == &quot;x:y:z&quot;);</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>needle</span>: <span class='ident'>u16</span>, <span class='ident'>replacement</span>: <span class='ident'>u16</span>) {
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>needle</span> <span class='op'>!=</span> <span class='number'>0</span>);
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>replacement</span> <span class='op'>!=</span> <span class='number'>0</span>);
+        <span class='kw'>for</span> <span class='ident'>w</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>iter_mut</span>() {
+            <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>w</span> <span class='op'>==</span> <span class='ident'>needle</span> {
+                <span class='op'>*</span><span class='ident'>w</span> <span class='op'>=</span> <span class='ident'>replacement</span>;
+            }
+        }
     }
 }
 
