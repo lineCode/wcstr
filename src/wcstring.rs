@@ -248,7 +248,7 @@ impl WCString {
 
     /// Push/Append a &OsStr (or anything that can be cast to &OsStr)
     /// The string will be scanned for nul, and the push will fail with NulError if a nul is found.
-    /// # ```push_ce_with_nul()``` example
+    /// # ```push_str()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
     ///     s.push_str("test1").unwrap();
@@ -279,7 +279,7 @@ impl WCString {
     /// The string will be scanned for nul, and the push will fail with NoNulError if a nul is not
     /// found.
     /// The push will stop at the first nul found in the string.
-    /// # ```push_ce_with_nul()``` example
+    /// # ```push_str_with_nul()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
     ///     s.push_str_with_nul("test1\0everything after nul will be ignored").unwrap();
