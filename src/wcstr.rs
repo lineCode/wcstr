@@ -1,7 +1,7 @@
 
 use ::std;
-use ::std::ffi::OsString;
-use ::std::os::windows::ffi::OsStringExt;
+use ::std::ffi::{OsString, OsStr};
+use ::std::os::windows::ffi::{OsStringExt, OsStrExt};
 
 use ::WCString;
 use ::NoNulError;
@@ -82,17 +82,46 @@ impl WCStr {
 
     /// Convert this "wide" string to a ```String``` by using ```String::from_utf16```
     pub fn to_string(&self) -> Result<String, std::string::FromUtf16Error> {
-        String::from_utf16(&self.to_slice())
+        String::from_utf16(self.to_slice())
     }
 
     /// Convert this "wide" string to a ```String``` by using ```String::from_utf16_lossy```
     pub fn to_string_lossy(&self) -> String {
-        String::from_utf16_lossy(&self.to_slice())
+        String::from_utf16_lossy(self.to_slice())
     }
 
     /// Convert this "wide" string to an ```OsString``` by using ```OsString::from_wide```
     pub fn to_os_string(&self) -> OsString {
         OsString::from_wide(self.to_slice())
+    }
+
+    /// starts with a string
+    pub fn starts_with<T>(&self, s: T) -> bool
+        where T: AsRef<WCStr> {
+        let s = s.as_ref();
+        let len = self.len();
+        if s.len() > len {
+            return false;
+        }
+
+        self.to_slice().iter().zip(s.to_slice().iter()).all(|(&a, &b)| a == b)
+    }
+
+    /// starts with a string
+    pub fn starts_with_str<T>(&self, s: T) -> bool
+        where T: AsRef<OsStr> {
+        let s = s.as_ref();
+        let mut s_iter = s.encode_wide();
+        let mut t_iter = self.to_slice().iter();
+
+        while let Some(a) = s_iter.next() {
+            match t_iter.next() {
+                Some(&b) if a == b => (),
+                _ => return false,
+            }
+        }
+
+        true
     }
 }
 
