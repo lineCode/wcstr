@@ -2,3 +2,7 @@
 name = "wcstr"
 version = "0.1.0"
 authors = ["rusty <rusty.new.dev@gmail.com>"]
+description = "Rust FFI helpers for working with win32 API's \"Unicode\" functions that uses \"wide\" strings."
+license = "MIT"
+repository = "https://github.com/rusty-new-dev/wcstr"
+
