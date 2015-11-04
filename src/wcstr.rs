@@ -4,8 +4,8 @@ use ::std::ffi::OsString;
 use ::std::os::windows::ffi::OsStringExt;
 
 use ::WCString;
+use ::NoNulError;
 use ::error;
-use error::NoNulError;
 
 /// Representation of a borrowed Win32 style "wide" string.
 #[derive(PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -48,7 +48,7 @@ impl WCStr {
     ///
     ///     use wcstr::WCStr;
     ///     static a : &'static [u16] = &[116u16, 101u16, 115u16, 116u16, 0];
-    ///     let s = WCStr::from_slice_with_nul(a);
+    ///     let s = WCStr::from_slice_with_nul(a).unwrap();
     ///     assert!(s.len() == (a.len() - 1));
     pub fn from_slice_with_nul<'a>(slice: &'a [u16]) -> Result<&'a WCStr, NoNulError> {
         match slice.iter().position(|x| *x == 0) {
@@ -65,17 +65,17 @@ impl WCStr {
     /// Return a raw pointer to this "wide" string.
     ///
     ///  * The pointer remains valid only as long as this string is valid.
-    ///  * The pointer points to a contiguous region of memory terminated with nul.
+    ///  * The pointer points to a contiguous region of memory terminated with ```nul```.
     pub fn as_ptr(&self) -> *const u16 {
         self.inner.as_ptr()
     }
 
-    /// Return this "wide" string as a slice of ```u16```s without a nul terminator.
+    /// Return this "wide" string as a slice of ```u16```s without a ```nul``` terminator.
     pub fn to_slice(&self) -> &[u16] {
         &self.inner[..self.len()]
     }
 
-    /// Return this "wide" string as a slice of ```u16```s with a nul terminator.
+    /// Return this "wide" string as a slice of ```u16```s with a ```nul``` terminator.
     pub fn to_slice_with_nul(&self) -> &[u16] {
         &self.inner
     }
@@ -90,7 +90,7 @@ impl WCStr {
         String::from_utf16_lossy(&self.inner)
     }
 
-    /// Convert this "wide" string to an ```OsString``` by using OsString::from_wide
+    /// Convert this "wide" string to an ```OsString``` by using ```OsString::from_wide```
     pub fn to_os_string(&self) -> OsString {
         OsString::from_wide(self.to_slice())
     }
