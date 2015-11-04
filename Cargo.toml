@@ -4,6 +4,7 @@ version = "0.1.1"
 authors = ["rusty <rusty.new.dev@gmail.com>"]
 description = "Rust FFI helpers for working with win32 API's \"Unicode\" functions that uses \"wide\" strings."
 license = "MIT"
+readme = "README.md"
 repository = "https://github.com/rusty-new-dev/wcstr"
 documentation = "https://rusty-new-dev.github.io/wcstr/"
 keywords = [ "windows", "ffi", "win32", "string" ]
