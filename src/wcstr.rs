@@ -30,7 +30,7 @@ impl WCStr {
     /// The lifetime of the ```&WCStr``` returned from this function is not guranteed to be correct and
     /// it is up to the caller to determine the appropriate lifetime.
     ///
-    /// ```from_raw_parts()``` example
+    /// # ```from_raw_parts()``` example
     ///
     ///     use wcstr::WCStr;
     ///     static a : &'static [u16] = &[116u16, 101u16, 115u16, 116u16, 0];
@@ -44,7 +44,8 @@ impl WCStr {
     /// Create a ```&WCStr``` from a slice of ```u16```'s.
     /// This function will scan the slice for ```nul``` and assume that ```nul``` terminates the string.
     /// If no ```nul``` is found in the slice, it will return ```Err(NoNulError(None))```
-    /// ```frm_slice_with_nul()``` example
+    /// # ```frm_slice_with_nul()``` example
+    ///
     ///     use wcstr::WCStr;
     ///     static a : &'static [u16] = &[116u16, 101u16, 115u16, 116u16, 0];
     ///     let s = WCStr::from_slice_with_nul(a);
@@ -62,6 +63,7 @@ impl WCStr {
     }
 
     /// Return a raw pointer to this "wide" string.
+    ///
     ///  * The pointer remains valid only as long as this string is valid.
     ///  * The pointer points to a contiguous region of memory terminated with nul.
     pub fn as_ptr(&self) -> *const u16 {
