@@ -82,12 +82,12 @@ impl WCStr {
 
     /// Convert this "wide" string to a ```String``` by using ```String::from_utf16```
     pub fn to_string(&self) -> Result<String, std::string::FromUtf16Error> {
-        String::from_utf16(&self.inner)
+        String::from_utf16(&self.to_slice())
     }
 
     /// Convert this "wide" string to a ```String``` by using ```String::from_utf16_lossy```
     pub fn to_string_lossy(&self) -> String {
-        String::from_utf16_lossy(&self.inner)
+        String::from_utf16_lossy(&self.to_slice())
     }
 
     /// Convert this "wide" string to an ```OsString``` by using ```OsString::from_wide```
