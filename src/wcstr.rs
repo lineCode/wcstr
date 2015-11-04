@@ -120,7 +120,7 @@ impl WCStr {
 
     /// starts with a string.
     ///
-    /// # ```starts_with()``` example
+    /// # ```starts_with_str()``` example
     ///
     ///     use wcstr::{WCStr, WCString};
     ///     let s = WCString::from_str("abcefg").unwrap();
