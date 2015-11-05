@@ -2,6 +2,7 @@
 use ::std;
 use ::std::ffi::{OsString, OsStr};
 use ::std::os::windows::ffi::{OsStringExt, OsStrExt};
+use ::std::path::PathBuf;
 
 use ::WCString;
 use ::NoNulError;
@@ -29,6 +30,8 @@ impl WCStr {
     ///
     /// The lifetime of the ```&WCStr``` returned from this function is not guranteed to be correct and
     /// it is up to the caller to determine the appropriate lifetime.
+    ///
+    /// ```from_slice_with_nul()``` should be used instead of this function when possible.
     ///
     /// # ```from_raw_parts()``` example
     ///
@@ -93,6 +96,11 @@ impl WCStr {
     /// Convert this "wide" string to an ```OsString``` by using ```OsString::from_wide```
     pub fn to_os_string(&self) -> OsString {
         OsString::from_wide(self.to_slice())
+    }
+
+    /// Convert this "wide" string to a ```PathBuf```
+    pub fn to_path_buf(&self) -> PathBuf {
+        PathBuf::from(self.to_os_string())
     }
 
     /// starts with a string.

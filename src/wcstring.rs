@@ -45,7 +45,7 @@ impl WCString {
         }
     }
 
-    /// Create a WCString from a Vec<u16> with a nul terminator.
+    /// Create a ```WCString``` from a ```Vec<u16>``` with a nul terminator.
     /// The string will be scanned for nul.
     /// The string will be truncated at the position where nul is found.
     /// NoNulError will be returned if a nul could not be found.
@@ -68,7 +68,7 @@ impl WCString {
         }
     }
 
-    /// Create a WCString from a Vec<u16> without checking for validity.
+    /// Create a ```WCString``` from a ```Vec<u16>``` without checking for validity.
     /// This function is unsafe as it assumes that the string passed in has no nul in it.
     /// # ```from_vec_unchecked()``` example
     ///     use wcstr::WCString;
@@ -83,7 +83,7 @@ impl WCString {
         WCString::from_vec_with_nul_unchecked(v)
     }
 
-    /// Create a WCString from a Vec<u16> with a nul terminator without checking for validity.
+    /// Create a ```WCString``` from a ```Vec<u16>``` with a nul terminator without checking for validity.
     /// This function is unsafe for the following reasons:
     ///  * This function assumes that the string passed in has no nul in it aside from the nul
     ///  terminator.
@@ -99,8 +99,8 @@ impl WCString {
         WCString { inner: v }
     }
 
-    /// Create a WCString from a &OsStr (or anything that can be cast to &OsStr, including OsString, &str and String)
-    /// The string will be scanned for nul and NulError will be returned if a nul is found.
+    /// Create a ```WCString``` from a ```&OsStr``` (or anything that can be cast to ```&OsStr```, including ``OsString``, ``&str```, ```&Path```, ```PathBuf``` and ```String```)
+    /// The string will be scanned for ```nul``` and ```NulError``` will be returned if a ```nul``` is found.
     /// # ```from_str()``` example
     ///     use wcstr::WCString;
     ///     let s = WCString::from_str("testing").unwrap();
@@ -111,12 +111,12 @@ impl WCString {
         WCString::from_vec(v)
     }
 
-    /// Create a WCString from a &OsStr with a nul terminator (or anything that can be cast to &OsStr, including OsString, &str and String)
-    /// The string will be scanned for nul and NoNulError will be returned if a nul could not be
-    /// found. The string will be truncated at the position where nul is found.
+    /// Create a ```WCString``` from a ```&OsStr``` (or anything that can be cast to ```&OsStr``) with a ```nul`` terminator.
+    /// The string will be scanned for ```nul``` and ```NoNulError``` will be returned if a ```nul``` could not be
+    /// found. The string will be truncated at the position where ```nul``` is found.
     /// # ```from_str_with_nul()``` example
     ///     use wcstr::WCString;
-    ///     let s = WCString::from_str_with_nul("testing\0").unwrap();
+    ///     let s = WCString::from_str_with_nul("testing\0ignored").unwrap();
     ///     assert!(s.len() == 7);
     pub fn from_str_with_nul<T>(s: T) -> Result<WCString, NoNulError>
         where T: AsRef<OsStr> {
@@ -124,10 +124,12 @@ impl WCString {
         WCString::from_vec_with_nul(v)
     }
 
-    /// Return the underlying buffer as a Vec<u16>.
-    /// The WCString will be consumed.
-    /// The returned buffer does not contain the nul terminator.
-    /// The returned buffer does not contain any nul.
+
+    /// Return the underlying buffer as a ```Vec<u16>```.
+    ///
+    /// * The ```WCString``` will be consumed.
+    /// * The returned buffer does not contain the ```nul``` terminator.
+    /// * The returned buffer does not contain any ```nul```.
     /// # ```into_vec()``` example
     ///     use wcstr::WCString;
     ///     let s = WCString::from_str("testing").unwrap();
@@ -140,9 +142,9 @@ impl WCString {
         v
     }
 
-    /// Return the underlying buffer as a Vec<u16> with a nul terminator.
-    /// The WCString will be consumed.
-    /// The returned buffer does not contain any nul aside from the nul terminator.
+    /// Return the underlying buffer as a ```Vec<u16>``` with a nul terminator.
+    /// The ```WCString``` will be consumed.
+    /// The returned buffer does not contain any ```nul``` aside from the ```nul``` terminator.
     /// # ```into_vec_with_nul()``` example
     ///     use wcstr::WCString;
     ///     let s = WCString::from_str("testing").unwrap();
@@ -152,9 +154,10 @@ impl WCString {
         self.inner
     }
 
-    /// Return the underlying buffer as a u16 slice.
-    /// The returned slice does not contain the nul terminator.
-    /// The returned slice does not contain any nul.
+    /// Return the underlying buffer as a ```u16``` slice.
+    ///
+    /// * The returned slice does not contain the ```nul``` terminator.
+    /// * The returned slice does not contain any ```nul```.
     /// # ```as_slice()``` example
     ///     use wcstr::WCString;
     ///     let s = WCString::from_str("testing").unwrap();
@@ -164,8 +167,8 @@ impl WCString {
         &self.inner[..self.len()]
     }
 
-    /// Return the underlying buffer as a u16 slice with a nul terminator.
-    /// The returned slice does not contain any nul aside from the nul terminator.
+    /// Return the underlying buffer as a ```u16``` slice with a ```nul``` terminator.
+    /// The returned slice does not contain any ```nul``` aside from the ```nul``` terminator.
     /// # ```as_slice_with_nul()``` example
     ///     use wcstr::WCString;
     ///     let s = WCString::from_str("testing").unwrap();
@@ -175,7 +178,7 @@ impl WCString {
         &self.inner
     }
 
-    /// Return this string as a &WCStr
+    /// Return this string as a ```&WCStr```
     /// # ```as_wcstr()``` example
     ///     use wcstr::WCString;
     ///     let s = WCString::from_str("testing").unwrap();
@@ -184,7 +187,7 @@ impl WCString {
         &self
     }
 
-    /// Push/Append a &WCStr (or anything that can cast to a &WCStr, like another WCString).
+    /// Push/Append a ```&WCStr``` (or anything that can cast to a ```&WCStr```, like another ```WCString```).
     /// # ```push()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
@@ -198,8 +201,8 @@ impl WCString {
         self.inner.extend(s.as_ref().to_slice_with_nul());
     }
 
-    /// Push/Append a u16 slice.
-    /// The slice will be scanned for nul, and the push will fail with NulError if a nul is found.
+    /// Push/Append a ```u16``` slice.
+    /// The slice will be scanned for ```nul```, and the push will fail with ```NulError``` if a ```nul``` is found.
     /// # ```push_slice()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
@@ -222,10 +225,11 @@ impl WCString {
         }
     }
 
-    /// Push/Append a u16 slice with a nul terminator.
-    /// The slice will be scanned for nul, and the push will fail with NoNulError if a nul is not
+    /// Push/Append a ```u16``` slice with a ```nul``` terminator.
+    /// The slice will be scanned for ```nul```, and the push will fail with ```NoNulError``` if a nul is not
     /// found.
-    /// The push will stop at the first nul found in the slice.
+    /// The push will stop at the first ```nul``` found in the slice, and the remaining part of the
+    /// slice will be ignored.
     /// # ```push_slice_with_nul()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
@@ -246,8 +250,8 @@ impl WCString {
         }
     }
 
-    /// Push/Append a &OsStr (or anything that can be cast to &OsStr)
-    /// The string will be scanned for nul, and the push will fail with NulError if a nul is found.
+    /// Push/Append a ```&OsStr``` (or anything that can be cast to ```&OsStr```)
+    /// The string will be scanned for ```nul```, and the push will fail with ```NulError``` if a ```nul``` is found.
     /// # ```push_str()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
@@ -275,10 +279,10 @@ impl WCString {
         }
     }
 
-    /// Push/Append a &OsStr (or anything that can be cast to &OsStr)
-    /// The string will be scanned for nul, and the push will fail with NoNulError if a nul is not
+    /// Push/Append a ```&OsStr``` (or anything that can be cast to ```&OsStr```)
+    /// The string will be scanned for ```nul```, and the push will fail with ```NoNulError``` if a ```nul``` is not
     /// found.
-    /// The push will stop at the first nul found in the string.
+    /// The push will stop at the first ```nul``` found in the string.
     /// # ```push_str_with_nul()``` example
     ///     use wcstr::WCString;
     ///     let mut s = WCString::new();
