@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-16' class='srclink' href='../src/wcstr/wcstr.rs.html#12-14' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-17' class='srclink' href='../src/wcstr/wcstr.rs.html#13-15' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct WCStr {
     // some fields omitted
 }</pre><div class='docblock'><p>Representation of a borrowed Win32 style &quot;wide&quot; string.</p>
@@ -67,6 +67,8 @@
 
 <p>The lifetime of the <code>&amp;WCStr</code> returned from this function is not guranteed to be correct and
 it is up to the caller to determine the appropriate lifetime.</p>
+
+<p><code>from_slice_with_nul()</code> should be used instead of this function when possible.</p>
 
 <h1 id="from_raw_parts()-example" class='section-header'><a
                            href="#from_raw_parts()-example"><code>from_raw_parts()</code> example</a></h1><pre class='rust rust-example-rendered'>
@@ -104,6 +106,8 @@ If no <code>nul</code> is found in the slice, it will return <code>Err(NoNulErro
 <div class='docblock'><p>Convert this &quot;wide&quot; string to a <code>String</code> by using <code>String::from_utf16_lossy</code></p>
 </div><h4 id='method.to_os_string' class='method'><code>fn <a href='#method.to_os_string' class='fnname'>to_os_string</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsString.html' title='std::ffi::os_str::OsString'>OsString</a></code></h4>
 <div class='docblock'><p>Convert this &quot;wide&quot; string to an <code>OsString</code> by using <code>OsString::from_wide</code></p>
+</div><h4 id='method.to_path_buf' class='method'><code>fn <a href='#method.to_path_buf' class='fnname'>to_path_buf</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a></code></h4>
+<div class='docblock'><p>Convert this &quot;wide&quot; string to a <code>PathBuf</code></p>
 </div><h4 id='method.starts_with' class='method'><code>fn <a href='#method.starts_with' class='fnname'>starts_with</a>&lt;T&gt;(&amp;self, s: T) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='../wcstr/struct.WCStr.html' title='wcstr::WCStr'>WCStr</a>&gt;</span></code></h4>
 <div class='docblock'><p>starts with a string.</p>
 

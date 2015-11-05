@@ -419,6 +419,10 @@
 <span id="377">377</span>
 <span id="378">378</span>
 <span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> ::<span class='ident'>std</span>;
@@ -467,7 +471,7 @@
         }
     }
 
-    <span class='doccomment'>/// Create a WCString from a Vec&lt;u16&gt; with a nul terminator.</span>
+    <span class='doccomment'>/// Create a ```WCString``` from a ```Vec&lt;u16&gt;``` with a nul terminator.</span>
     <span class='doccomment'>/// The string will be scanned for nul.</span>
     <span class='doccomment'>/// The string will be truncated at the position where nul is found.</span>
     <span class='doccomment'>/// NoNulError will be returned if a nul could not be found.</span>
@@ -490,7 +494,7 @@
         }
     }
 
-    <span class='doccomment'>/// Create a WCString from a Vec&lt;u16&gt; without checking for validity.</span>
+    <span class='doccomment'>/// Create a ```WCString``` from a ```Vec&lt;u16&gt;``` without checking for validity.</span>
     <span class='doccomment'>/// This function is unsafe as it assumes that the string passed in has no nul in it.</span>
     <span class='doccomment'>/// # ```from_vec_unchecked()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
@@ -505,7 +509,7 @@
         <span class='ident'>WCString</span>::<span class='ident'>from_vec_with_nul_unchecked</span>(<span class='ident'>v</span>)
     }
 
-    <span class='doccomment'>/// Create a WCString from a Vec&lt;u16&gt; with a nul terminator without checking for validity.</span>
+    <span class='doccomment'>/// Create a ```WCString``` from a ```Vec&lt;u16&gt;``` with a nul terminator without checking for validity.</span>
     <span class='doccomment'>/// This function is unsafe for the following reasons:</span>
     <span class='doccomment'>///  * This function assumes that the string passed in has no nul in it aside from the nul</span>
     <span class='doccomment'>///  terminator.</span>
@@ -521,8 +525,8 @@
         <span class='ident'>WCString</span> { <span class='ident'>inner</span>: <span class='ident'>v</span> }
     }
 
-    <span class='doccomment'>/// Create a WCString from a &amp;OsStr (or anything that can be cast to &amp;OsStr, including OsString, &amp;str and String)</span>
-    <span class='doccomment'>/// The string will be scanned for nul and NulError will be returned if a nul is found.</span>
+    <span class='doccomment'>/// Create a ```WCString``` from a ```&amp;OsStr``` (or anything that can be cast to ```&amp;OsStr```, including ``OsString``, ``&amp;str```, ```&amp;Path```, ```PathBuf``` and ```String```)</span>
+    <span class='doccomment'>/// The string will be scanned for ```nul``` and ```NulError``` will be returned if a ```nul``` is found.</span>
     <span class='doccomment'>/// # ```from_str()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let s = WCString::from_str(&quot;testing&quot;).unwrap();</span>
@@ -533,12 +537,12 @@
         <span class='ident'>WCString</span>::<span class='ident'>from_vec</span>(<span class='ident'>v</span>)
     }
 
-    <span class='doccomment'>/// Create a WCString from a &amp;OsStr with a nul terminator (or anything that can be cast to &amp;OsStr, including OsString, &amp;str and String)</span>
-    <span class='doccomment'>/// The string will be scanned for nul and NoNulError will be returned if a nul could not be</span>
-    <span class='doccomment'>/// found. The string will be truncated at the position where nul is found.</span>
+    <span class='doccomment'>/// Create a ```WCString``` from a ```&amp;OsStr``` (or anything that can be cast to ```&amp;OsStr``) with a ```nul`` terminator.</span>
+    <span class='doccomment'>/// The string will be scanned for ```nul``` and ```NoNulError``` will be returned if a ```nul``` could not be</span>
+    <span class='doccomment'>/// found. The string will be truncated at the position where ```nul``` is found.</span>
     <span class='doccomment'>/// # ```from_str_with_nul()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
-    <span class='doccomment'>///     let s = WCString::from_str_with_nul(&quot;testing\0&quot;).unwrap();</span>
+    <span class='doccomment'>///     let s = WCString::from_str_with_nul(&quot;testing\0ignored&quot;).unwrap();</span>
     <span class='doccomment'>///     assert!(s.len() == 7);</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_str_with_nul</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='ident'>s</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>WCString</span>, <span class='ident'>NoNulError</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>OsStr</span><span class='op'>&gt;</span> {
@@ -546,10 +550,12 @@
         <span class='ident'>WCString</span>::<span class='ident'>from_vec_with_nul</span>(<span class='ident'>v</span>)
     }
 
-    <span class='doccomment'>/// Return the underlying buffer as a Vec&lt;u16&gt;.</span>
-    <span class='doccomment'>/// The WCString will be consumed.</span>
-    <span class='doccomment'>/// The returned buffer does not contain the nul terminator.</span>
-    <span class='doccomment'>/// The returned buffer does not contain any nul.</span>
+
+    <span class='doccomment'>/// Return the underlying buffer as a ```Vec&lt;u16&gt;```.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// * The ```WCString``` will be consumed.</span>
+    <span class='doccomment'>/// * The returned buffer does not contain the ```nul``` terminator.</span>
+    <span class='doccomment'>/// * The returned buffer does not contain any ```nul```.</span>
     <span class='doccomment'>/// # ```into_vec()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let s = WCString::from_str(&quot;testing&quot;).unwrap();</span>
@@ -562,9 +568,9 @@
         <span class='ident'>v</span>
     }
 
-    <span class='doccomment'>/// Return the underlying buffer as a Vec&lt;u16&gt; with a nul terminator.</span>
-    <span class='doccomment'>/// The WCString will be consumed.</span>
-    <span class='doccomment'>/// The returned buffer does not contain any nul aside from the nul terminator.</span>
+    <span class='doccomment'>/// Return the underlying buffer as a ```Vec&lt;u16&gt;``` with a nul terminator.</span>
+    <span class='doccomment'>/// The ```WCString``` will be consumed.</span>
+    <span class='doccomment'>/// The returned buffer does not contain any ```nul``` aside from the ```nul``` terminator.</span>
     <span class='doccomment'>/// # ```into_vec_with_nul()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let s = WCString::from_str(&quot;testing&quot;).unwrap();</span>
@@ -574,9 +580,10 @@
         <span class='self'>self</span>.<span class='ident'>inner</span>
     }
 
-    <span class='doccomment'>/// Return the underlying buffer as a u16 slice.</span>
-    <span class='doccomment'>/// The returned slice does not contain the nul terminator.</span>
-    <span class='doccomment'>/// The returned slice does not contain any nul.</span>
+    <span class='doccomment'>/// Return the underlying buffer as a ```u16``` slice.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// * The returned slice does not contain the ```nul``` terminator.</span>
+    <span class='doccomment'>/// * The returned slice does not contain any ```nul```.</span>
     <span class='doccomment'>/// # ```as_slice()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let s = WCString::from_str(&quot;testing&quot;).unwrap();</span>
@@ -586,8 +593,8 @@
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span>[..<span class='self'>self</span>.<span class='ident'>len</span>()]
     }
 
-    <span class='doccomment'>/// Return the underlying buffer as a u16 slice with a nul terminator.</span>
-    <span class='doccomment'>/// The returned slice does not contain any nul aside from the nul terminator.</span>
+    <span class='doccomment'>/// Return the underlying buffer as a ```u16``` slice with a ```nul``` terminator.</span>
+    <span class='doccomment'>/// The returned slice does not contain any ```nul``` aside from the ```nul``` terminator.</span>
     <span class='doccomment'>/// # ```as_slice_with_nul()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let s = WCString::from_str(&quot;testing&quot;).unwrap();</span>
@@ -597,7 +604,7 @@
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span>
     }
 
-    <span class='doccomment'>/// Return this string as a &amp;WCStr</span>
+    <span class='doccomment'>/// Return this string as a ```&amp;WCStr```</span>
     <span class='doccomment'>/// # ```as_wcstr()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let s = WCString::from_str(&quot;testing&quot;).unwrap();</span>
@@ -606,7 +613,7 @@
         <span class='kw-2'>&amp;</span><span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// Push/Append a &amp;WCStr (or anything that can cast to a &amp;WCStr, like another WCString).</span>
+    <span class='doccomment'>/// Push/Append a ```&amp;WCStr``` (or anything that can cast to a ```&amp;WCStr```, like another ```WCString```).</span>
     <span class='doccomment'>/// # ```push()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let mut s = WCString::new();</span>
@@ -620,8 +627,8 @@
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>extend</span>(<span class='ident'>s</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_slice_with_nul</span>());
     }
 
-    <span class='doccomment'>/// Push/Append a u16 slice.</span>
-    <span class='doccomment'>/// The slice will be scanned for nul, and the push will fail with NulError if a nul is found.</span>
+    <span class='doccomment'>/// Push/Append a ```u16``` slice.</span>
+    <span class='doccomment'>/// The slice will be scanned for ```nul```, and the push will fail with ```NulError``` if a ```nul``` is found.</span>
     <span class='doccomment'>/// # ```push_slice()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let mut s = WCString::new();</span>
@@ -644,10 +651,11 @@
         }
     }
 
-    <span class='doccomment'>/// Push/Append a u16 slice with a nul terminator.</span>
-    <span class='doccomment'>/// The slice will be scanned for nul, and the push will fail with NoNulError if a nul is not</span>
+    <span class='doccomment'>/// Push/Append a ```u16``` slice with a ```nul``` terminator.</span>
+    <span class='doccomment'>/// The slice will be scanned for ```nul```, and the push will fail with ```NoNulError``` if a nul is not</span>
     <span class='doccomment'>/// found.</span>
-    <span class='doccomment'>/// The push will stop at the first nul found in the slice.</span>
+    <span class='doccomment'>/// The push will stop at the first ```nul``` found in the slice, and the remaining part of the</span>
+    <span class='doccomment'>/// slice will be ignored.</span>
     <span class='doccomment'>/// # ```push_slice_with_nul()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let mut s = WCString::new();</span>
@@ -668,8 +676,8 @@
         }
     }
 
-    <span class='doccomment'>/// Push/Append a &amp;OsStr (or anything that can be cast to &amp;OsStr)</span>
-    <span class='doccomment'>/// The string will be scanned for nul, and the push will fail with NulError if a nul is found.</span>
+    <span class='doccomment'>/// Push/Append a ```&amp;OsStr``` (or anything that can be cast to ```&amp;OsStr```)</span>
+    <span class='doccomment'>/// The string will be scanned for ```nul```, and the push will fail with ```NulError``` if a ```nul``` is found.</span>
     <span class='doccomment'>/// # ```push_str()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let mut s = WCString::new();</span>
@@ -697,10 +705,10 @@
         }
     }
 
-    <span class='doccomment'>/// Push/Append a &amp;OsStr (or anything that can be cast to &amp;OsStr)</span>
-    <span class='doccomment'>/// The string will be scanned for nul, and the push will fail with NoNulError if a nul is not</span>
+    <span class='doccomment'>/// Push/Append a ```&amp;OsStr``` (or anything that can be cast to ```&amp;OsStr```)</span>
+    <span class='doccomment'>/// The string will be scanned for ```nul```, and the push will fail with ```NoNulError``` if a ```nul``` is not</span>
     <span class='doccomment'>/// found.</span>
-    <span class='doccomment'>/// The push will stop at the first nul found in the string.</span>
+    <span class='doccomment'>/// The push will stop at the first ```nul``` found in the string.</span>
     <span class='doccomment'>/// # ```push_str_with_nul()``` example</span>
     <span class='doccomment'>///     use wcstr::WCString;</span>
     <span class='doccomment'>///     let mut s = WCString::new();</span>

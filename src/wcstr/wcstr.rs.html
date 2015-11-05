@@ -226,11 +226,20 @@
 <span id="184">184</span>
 <span id="185">185</span>
 <span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> ::<span class='ident'>std</span>;
 <span class='kw'>use</span> ::<span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>OsString</span>, <span class='ident'>OsStr</span>};
 <span class='kw'>use</span> ::<span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>windows</span>::<span class='ident'>ffi</span>::{<span class='ident'>OsStringExt</span>, <span class='ident'>OsStrExt</span>};
+<span class='kw'>use</span> ::<span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>;
 
 <span class='kw'>use</span> ::<span class='ident'>WCString</span>;
 <span class='kw'>use</span> ::<span class='ident'>NoNulError</span>;
@@ -258,6 +267,8 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// The lifetime of the ```&amp;WCStr``` returned from this function is not guranteed to be correct and</span>
     <span class='doccomment'>/// it is up to the caller to determine the appropriate lifetime.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```from_slice_with_nul()``` should be used instead of this function when possible.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # ```from_raw_parts()``` example</span>
     <span class='doccomment'>///</span>
@@ -322,6 +333,11 @@
     <span class='doccomment'>/// Convert this &quot;wide&quot; string to an ```OsString``` by using ```OsString::from_wide```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_os_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>OsString</span> {
         <span class='ident'>OsString</span>::<span class='ident'>from_wide</span>(<span class='self'>self</span>.<span class='ident'>to_slice</span>())
+    }
+
+    <span class='doccomment'>/// Convert this &quot;wide&quot; string to a ```PathBuf```</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_path_buf</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PathBuf</span> {
+        <span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='self'>self</span>.<span class='ident'>to_os_string</span>())
     }
 
     <span class='doccomment'>/// starts with a string.</span>
