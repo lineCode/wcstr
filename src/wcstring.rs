@@ -279,6 +279,17 @@ impl WCString {
         }
     }
 
+    /// Push/Append a ```&OsStr``` without checking for ```nul```
+    pub unsafe fn push_str_unchecked<T>(&mut self, s: T)
+        where T: AsRef<OsStr> {
+        let _nul = self.inner.pop();
+        debug_assert_eq!(_nul, Some(0u16));
+
+        let s = s.as_ref();
+        self.inner.extend(s.encode_wide());
+        self.inner.push(0);
+    }
+
     /// Push/Append a ```&OsStr``` (or anything that can be cast to ```&OsStr```)
     /// The string will be scanned for ```nul```, and the push will fail with ```NoNulError``` if a ```nul``` is not
     /// found.
@@ -305,6 +316,15 @@ impl WCString {
         else {
             self.inner.push(0);
             Ok(())
+        }
+    }
+
+    /// Truncate the string to a specified length. If the string was shorter than the specified
+    /// length, this has no effect.
+    pub fn truncate(&mut self, len: usize) {
+        if (self.inner.len() - 1) > len {
+            self.inner.truncate(len);
+            self.inner.push(0);
         }
     }
 

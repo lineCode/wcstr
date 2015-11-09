@@ -65,6 +65,11 @@ impl WCStr {
         self.inner.len() - 1
     }
 
+    /// is empty
+    pub fn is_empty(&self) -> bool {
+        self.inner.len() == 1
+    }
+
     /// Return a raw pointer to this "wide" string.
     ///
     ///  * The pointer remains valid only as long as this string is valid.
@@ -149,6 +154,12 @@ impl WCStr {
         }
 
         true
+    }
+}
+
+impl<T: ?Sized + AsRef<OsStr>> PartialEq<T> for WCStr {
+    fn eq(&self, other: &T) -> bool {
+        self.to_slice().iter().zip(other.as_ref().encode_wide()).all(|(&a, b)| a == b)
     }
 }
 
