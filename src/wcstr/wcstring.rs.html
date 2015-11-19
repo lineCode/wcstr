@@ -423,6 +423,26 @@
 <span id="381">381</span>
 <span id="382">382</span>
 <span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> ::<span class='ident'>std</span>;
@@ -705,6 +725,17 @@
         }
     }
 
+    <span class='doccomment'>/// Push/Append a ```&amp;OsStr``` without checking for ```nul```</span>
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>push_str_unchecked</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>s</span>: <span class='ident'>T</span>)
+        <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>OsStr</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>_nul</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>pop</span>();
+        <span class='macro'>debug_assert_eq</span><span class='macro'>!</span>(<span class='ident'>_nul</span>, <span class='prelude-val'>Some</span>(<span class='number'>0u16</span>));
+
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>as_ref</span>();
+        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>extend</span>(<span class='ident'>s</span>.<span class='ident'>encode_wide</span>());
+        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
+    }
+
     <span class='doccomment'>/// Push/Append a ```&amp;OsStr``` (or anything that can be cast to ```&amp;OsStr```)</span>
     <span class='doccomment'>/// The string will be scanned for ```nul```, and the push will fail with ```NoNulError``` if a ```nul``` is not</span>
     <span class='doccomment'>/// found.</span>
@@ -731,6 +762,15 @@
         <span class='kw'>else</span> {
             <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
             <span class='prelude-val'>Ok</span>(())
+        }
+    }
+
+    <span class='doccomment'>/// Truncate the string to a specified length. If the string was shorter than the specified</span>
+    <span class='doccomment'>/// length, this has no effect.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>truncate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>) {
+        <span class='kw'>if</span> (<span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>) <span class='op'>&gt;</span> <span class='ident'>len</span> {
+            <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>truncate</span>(<span class='ident'>len</span>);
+            <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
         }
     }
 

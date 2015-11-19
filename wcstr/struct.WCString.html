@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-991' class='srclink' href='../src/wcstr/wcstring.rs.html#14-16' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1042' class='srclink' href='../src/wcstr/wcstring.rs.html#14-16' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct WCString {
     // some fields omitted
 }</pre><div class='docblock'><p>A type representing an owned Win32 style &quot;wide&quot; string.</p>
@@ -226,6 +226,8 @@ The string will be scanned for <code>nul</code>, and the push will fail with <co
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>WCString</span>::<span class='ident'>new</span>();
 <span class='ident'>s</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;test1&quot;</span>).<span class='ident'>unwrap</span>();
 <span class='ident'>s</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;test2&quot;</span>).<span class='ident'>unwrap</span>();</pre>
+</div><h4 id='method.push_str_unchecked' class='method'><code>unsafe fn <a href='#method.push_str_unchecked' class='fnname'>push_str_unchecked</a>&lt;T&gt;(&amp;mut self, s: T) <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsStr.html' title='std::ffi::os_str::OsStr'>OsStr</a>&gt;</span></code></h4>
+<div class='docblock'><p>Push/Append a <code>&amp;OsStr</code> without checking for <code>nul</code></p>
 </div><h4 id='method.push_str_with_nul' class='method'><code>fn <a href='#method.push_str_with_nul' class='fnname'>push_str_with_nul</a>&lt;T&gt;(&amp;mut self, s: T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='../wcstr/struct.NoNulError.html' title='wcstr::NoNulError'>NoNulError</a>&gt; <span class='where'>where T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsStr.html' title='std::ffi::os_str::OsStr'>OsStr</a>&gt;</span></code></h4>
 <div class='docblock'><p>Push/Append a <code>&amp;OsStr</code> (or anything that can be cast to <code>&amp;OsStr</code>)
 The string will be scanned for <code>nul</code>, and the push will fail with <code>NoNulError</code> if a <code>nul</code> is not
@@ -238,6 +240,9 @@ The push will stop at the first <code>nul</code> found in the string.</p>
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>WCString</span>::<span class='ident'>new</span>();
 <span class='ident'>s</span>.<span class='ident'>push_str_with_nul</span>(<span class='string'>&quot;test1\0everything after nul will be ignored&quot;</span>).<span class='ident'>unwrap</span>();
 <span class='ident'>s</span>.<span class='ident'>push_str_with_nul</span>(<span class='string'>&quot;test2\0&quot;</span>).<span class='ident'>unwrap</span>();</pre>
+</div><h4 id='method.truncate' class='method'><code>fn <a href='#method.truncate' class='fnname'>truncate</a>(&amp;mut self, len: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h4>
+<div class='docblock'><p>Truncate the string to a specified length. If the string was shorter than the specified
+length, this has no effect.</p>
 </div><h4 id='method.split' class='method'><code>fn <a href='#method.split' class='fnname'>split</a>(self, delimiter: <a href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a>) -&gt; <a class='struct' href='../wcstr/struct.Split.html' title='wcstr::Split'>Split</a></code></h4>
 <div class='docblock'><p>Split the string into multiple <code>&amp;mut WCStr</code> using a delimiter.</p>
 
@@ -273,6 +278,8 @@ separated by the delimiter.</li>
 <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>t</span> <span class='op'>==</span> <span class='string'>&quot;x:y:z&quot;</span>);</pre>
 </div></div><h2 id='deref-methods'>Methods from <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=<a class='struct' href='../wcstr/struct.WCStr.html' title='wcstr::WCStr'>WCStr</a>&gt;</h2><div class='impl-items'><h4 id='method.len' class='method'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
 <div class='docblock'><p>length of the string in u16 units</p>
+</div><h4 id='method.is_empty' class='method'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>is empty</p>
 </div><h4 id='method.as_ptr' class='method'><code>fn <a href='#method.as_ptr' class='fnname'>as_ptr</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*const <a href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a></a></code></h4>
 <div class='docblock'><p>Return a raw pointer to this &quot;wide&quot; string.</p>
 
