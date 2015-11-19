@@ -1,6 +1,6 @@
 [package]
 name = "wcstr"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["rusty <rusty.new.dev@gmail.com>"]
 description = "Rust FFI helpers for working with win32 API's \"Unicode\" functions that uses \"wide\" strings."
 license = "MIT"
